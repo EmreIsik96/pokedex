@@ -2,6 +2,10 @@ body
 {
     margin: 0;
 }
+.d-none
+{
+    display: none;
+}
 header
 {
     background-color: rgba(0, 0, 0, 0.808);
@@ -17,6 +21,31 @@ header
     justify-content: center;
     flex-wrap: wrap;
     background-color: darkgoldenrod;
+    padding-top: 30px;
+}
+.buttonMainContainer
+{
+    background-color: darkgoldenrod;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+.lmButton
+{
+    height: 50px;
+    width: 150px;
+    background-color: rgb(187, 35, 9);
+    color: white;
+    font-size: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 0 3px black;
+    transition: 300ms;
+}
+.lmButton:hover
+{
+    scale: 1.1;
+    cursor: pointer;
 }
 .card
 {
@@ -27,39 +56,79 @@ header
     height: 250px;
     width: 200px;
     margin: 10px;
-    padding-top: 10px;
     padding-bottom: 10px;
     background-color: lightgray;
     font-size: 24px;
-    color: darkgoldenrod;
+    color: black;
     font-weight: bold;
+    border-radius: 15px;
+    transition: 300ms;
 }
 .card:hover
 {
     cursor: pointer;
+    scale: 1.04;
+}
+.nameOfPokemon
+{
+    display: flex;
+    justify-content: center;
+    background-color: black;
+    color: rgba(255, 255, 255, 0.89);
+    width: 100%;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }
 .mainImagesOfPokemon
 {
     height: 200px;
     width: 200px;
 }
+
+.mainImagesOfPokemon:hover
+{
+    scale: 1.07;
+    transition: 300ms;
+}
+
+.typeMainContainer
+{
+    width: 100%;    
+    display: flex;
+    justify-content: center;
+}
+
+.typeClass
+{
+    height: 24px;
+    width: 80px;
+    margin-right: 10px;
+    margin-left: 10px;
+    font-size: 18px;
+    text-align: center;
+    background-color: black;
+    color: rgba(255, 255, 255, 0.89);
+    border-radius: 15px;
+}
+
+/* BACKGROUND-COLOR CARDS Je nach Type */
 .grass
 {
-
+    background-color: rgba(172, 255, 47, 0.664);
 }
 .fire
 {
-
+    background-color: rgba(255, 0, 0, 0.87);
 }
 .water
 {
-    background-color: aqua;
+    background-color: rgba(0, 255, 255, 0.815);
 }
 .bug
 {
-
+    background-color: rgba(1, 126, 1, 0.534);
 }
 .normal
 {
-
+    background-color: bisque;
 }
