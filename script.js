@@ -1,4 +1,5 @@
 let pokemonData = [];
+let pokemonName = [];
 
 async function loadPokedex()
 {
@@ -17,15 +18,14 @@ function renderPokemonData()
             let typesCheckPokemon = pokemonData[j]['types'];
             let pokemonType1 = pokemonData[j]['types'][0]['type']['name'];
             let pokemonType2 = checkType(typesCheckPokemon, j);
-            console.log(pokemonType2);
             let content = document.getElementById('content');
                 content.innerHTML += `<div class="card ${pokemonType1}">
                                             <div class=nameOfPokemon>${pokemonName}</div>
                                             <div id=bgCardsID${j}><img class="mainImagesOfPokemon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${j +1}.png"></div>    
                                             
                                             <div class="typeMainContainer">
-                                                <div class="typeClass">${pokemonType1}</div>
-                                                <div id="type2" class="typeClass">${pokemonType2}</div>
+                                                <div class="type1Class">${pokemonType1}</div>
+                                                <div id="type2">${pokemonType2}</div>
                                             </div>
                                     </div>`;       
     }
@@ -36,11 +36,10 @@ function checkType(typesCheckPokemon, j)
     let pokemonType2 = '';
     if (typesCheckPokemon.length > 1) 
         {
-            pokemonType2 = pokemonData[j]['types'][1]['type']['name'];
+            pokemonType2 = `<div class="type2Class">${pokemonData[j]['types'][1]['type']['name']}</div>`
         } 
     return pokemonType2;
 }
-
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -56,6 +55,6 @@ function backgroundColorOfCards(pokemonType)
     }
 }
 
-function loadMorePokemon(i) {
+/*function loadMorePokemon(i) {
     i + 20;
-}
+}*/

@@ -15,6 +15,22 @@ header
     display: flex;
     justify-content: center;
 }
+.inputMainContainer
+{
+    background-color: darkgoldenrod;
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}
+input
+{
+    width: 500px;
+    height: 40px;
+    border-radius: 15px;
+    background-color: #313131;
+    color: white;
+    padding-left: 20px;
+}
 .mainContainer
 {
     display: flex;
@@ -98,7 +114,19 @@ header
     justify-content: center;
 }
 
-.typeClass
+.type1Class
+{
+    height: 24px;
+    width: 80px;
+    margin-right: 10px;
+    margin-left: 10px;
+    font-size: 18px;
+    text-align: center;
+    background-color: black;
+    color: rgba(255, 255, 255, 0.89);
+    border-radius: 15px;
+}
+.type2Class
 {
     height: 24px;
     width: 80px;
