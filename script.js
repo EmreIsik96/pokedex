@@ -1,6 +1,6 @@
 let pokemonData = [];
 let filteredData = [];
-let currentOffset = 0;
+let currentOffset = 20;
 const limit = 20;
 
 function init() {
@@ -24,13 +24,14 @@ function renderPokemonData() {
     {
     for (let j = 0; j < pokemonData.length; j++) {
         let pokemonID = pokemonData[j]["id"];
+        let pokemonImage = pokemonData[j]["sprites"]["other"]["home"]["front_default"];
         let pokemonName = capitalizeFirstLetter(pokemonData[j]["name"]);
         let typesCheckPokemon = pokemonData[j]["types"];
         let pokemonType1 = pokemonData[j]["types"][0]["type"]["name"];
         let pokemonType2 = checkType(typesCheckPokemon, j);
-        content.innerHTML += `<div class="card ${pokemonType1}">
+        content.innerHTML += `<div onclick="showAttributes()" class="card ${pokemonType1}">
                                     <div class=nameOfPokemon>#${pokemonID} ${pokemonName}</div>
-                                    <div> <img class="mainImagesOfPokemon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${j + 1}.png"></div>    
+                                    <div> <img class="mainImagesOfPokemon" src="${pokemonImage}"></div>    
                                     <div class="typeMainContainer">
                                         <div class="type1Class">${pokemonType1}</div>
                                         <div id="type2">${pokemonType2}</div>
@@ -79,4 +80,10 @@ async function loadMorePokemon() {
   }
   renderPokemonData(pokemonData);
   currentOffset += limit;
+}
+
+function showAttributes()
+{
+   document.getElementById('attributes').classList.remove('d-none');
+   document.getElementById('content').classList.add('blur');
 }
