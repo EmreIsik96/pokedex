@@ -11,12 +11,10 @@
 </head>
 
 <body onload="loadPokedex()">        
-    <header class="headerClass">
-        <div class="home" onclick="window.location.reload();">
-        P<img class="pokeIcon" src="./img/poke-icon.svg" alt="">kédex
-        </div>
+    <header class="headerClass">P
+        <img class="pokeIcon" src="./img/poke-icon.svg" alt="">
+        <span>kédex</span>
     </header>
-</div>
     <div id="blurForAllContainer">
         <div id="inputMainContainerID" class="inputMainContainer">
             <img class="pikaSearchIMG" src="./img/pikaSearch.png" alt="">
