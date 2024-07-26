@@ -121,7 +121,7 @@ function showAttributes(
                                               <div class="secondContainerOnBigWindow"> 
                                                   <div class="typeMainContainerOnBigWindow">
                                                       
-                                                      <div id="statsID" class="statsTypeContainer">Type:
+                                                      <div id="statsID" class="statsTypeContainer">TYPE:
                                                         <div class="type1ClassOnBigWindow">${pokemonType1}</div>
                                                       </div>
 

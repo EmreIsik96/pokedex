@@ -342,6 +342,29 @@ input
 {
     background-color: rgb(211, 211, 211);
 }
+@media(max-width: 1920px)
+{
+    .attributesMainContainer
+    {
+        position: sticky;
+        top: 0;
+        bottom: 40px;
+        left: 0;
+        right: 0;
+    }
+    .attributesContainer
+    {
+       width: 50vh;
+       height: 80vh;
+    }
+}
+@media(max-width: 815px)
+{
+    .attributesContainer
+    {
+       width: 50vh;
+    }
+}
 
 @media(max-width: 687px)
 {
@@ -375,7 +398,55 @@ input
         width: 50px;
         font-size: 16px;
     }
+    .attributesMainContainer
+    {
+        position: sticky;
+        top: 0;
+        bottom: 100px;
+        left: 0;
+        right: 0;
+    }
+    .attributesContainer
+    {
+       width: 60vw;
+       height: 70vh;
+    }
+    .nameOfPokemonOnBigWindow
+    {        
+        height: 40px;
+        font-size: 30px;
+    }
+    .statsTypeContainer, .individualStats
+    {
+        font-size: 18px;
+        
+    }
+    .type1ClassOnBigWindow
+    {
+        height: 24px;
+        width: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        background-color: black;
+        color: rgba(255, 255, 255, 0.89);
+        border-radius: 15px;
+        margin-bottom: 10px;
+        margin-right: 20px;
+    }
+    .typeMainContainerOnBigWindow
+    {
+        padding-left: 20px;
+    }
+    .mainImagesOfPokemonOnBigWindow
+    {
+        height: 180px;
+        width: 180px;
+        margin-bottom: 20px;
+    }
 }
+
 @media(max-width: 509px)
 {
     input
@@ -398,6 +469,16 @@ input
         height: 100px;
         width: 100px;
     }
+    .mainImagesOfPokemonOnBigWindow
+    {
+        height: 150px;
+        width: 150px;
+    }
+    .nameOfPokemonOnBigWindow
+    {        
+        height: 30px;
+        font-size: 22px;
+    }
     .type1Class, .type2Class
     {
         display:flex;
@@ -407,4 +488,25 @@ input
         height: 30px;
         font-size: 14px;
     }
+    .type1ClassOnBigWindow
+    {
+        height: 20px;
+        font-size: 16px;
+    }
+    .statsTypeContainer
+    {
+        font-size: 16px;
+    }
+    .attributesContainer
+    {
+        height: 62vh;
+    }
 }
+@media(max-width: 509px)
+{
+    .attributesContainer
+    {
+        width: 80vw;
+    }
+}
+
