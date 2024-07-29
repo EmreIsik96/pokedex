@@ -5,12 +5,14 @@ let currentOffset = 20;
 const limit = 20;
 
 async function loadPokedex() {
+  showLoadingSpinner();
   for (let i = 1; i < 20; i++) {
     let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
     responseAsJson = await response.json();
     pokemonData.push(responseAsJson);
   }
   renderPokemonData();
+  hideLoadingSpinner();
 }
 
 function renderPokemonData() {
@@ -87,12 +89,14 @@ function searchName() {
 }
 
 async function loadMorePokemon() {
+  showLoadingSpinner();
   for (let i = currentOffset + 1; i <= currentOffset + limit; i++) {
     let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
     let responseAsJson = await response.json();
     pokemonData.push(responseAsJson);
   }
   renderPokemonData();
+  hideLoadingSpinner();
   currentOffset += limit;
 }
 
@@ -149,4 +153,24 @@ function disableScroll() {
 
 function enableScroll() {
   document.body.classList.remove("remove-scrolling");
+}
+
+function showLoadingSpinner()
+{
+  document.getElementById('loadingSpinnerContainerID').classList.remove('d-none');
+  document.getElementById('loadingSpinnerID').classList.remove('d-none');
+  document.getElementById('loadingSpinnerContainerID').classList.add('p-fixed');
+  document.getElementById('loadingSpinnerID').classList.add('p-fixed');
+  document.getElementById('blurForAllContainer').classList.add('d-none');
+  document.getElementById('loadingSpinnerID').classList.add('centerLoadingScreen');
+}
+
+function hideLoadingSpinner()
+{
+  document.getElementById('loadingSpinnerContainerID').classList.remove('d-none');  
+  document.getElementById('loadingSpinnerID').classList.add('d-none');
+  document.getElementById('loadingSpinnerContainerID').classList.remove('p-fixed');  
+  document.getElementById('loadingSpinnerID').classList.remove('p-fixed');
+  document.getElementById('blurForAllContainer').classList.remove('d-none');
+  document.getElementById('loadingSpinnerID').classList.remove('centerLoadingScreen');
 }
