@@ -5,12 +5,14 @@ let currentOffset = 20;
 const limit = 20;
 
 async function loadPokedex() {
+  showLoadingSpinner();
   for (let i = 1; i < 20; i++) {
     let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
     responseAsJson = await response.json();
     pokemonData.push(responseAsJson);
   }
   renderPokemonData();
+  hideLoadingSpinner();
 }
 
 function renderPokemonData() {
@@ -87,12 +89,14 @@ function searchName() {
 }
 
 async function loadMorePokemon() {
+  showLoadingSpinner();
   for (let i = currentOffset + 1; i <= currentOffset + limit; i++) {
     let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
     let responseAsJson = await response.json();
     pokemonData.push(responseAsJson);
   }
   renderPokemonData();
+  hideLoadingSpinner();
   currentOffset += limit;
 }
 
@@ -121,7 +125,7 @@ function showAttributes(
                                               <div class="secondContainerOnBigWindow"> 
                                                   <div class="typeMainContainerOnBigWindow">
                                                       
-                                                      <div id="statsID" class="statsTypeContainer">Type:
+                                                      <div id="statsID" class="statsTypeContainer">TYPE:
                                                         <div class="type1ClassOnBigWindow">${pokemonType1}</div>
                                                       </div>
 
@@ -133,6 +137,15 @@ function showAttributes(
                                                       <div class="individualStats"> SP-DEFENSE: <div class="type1ClassOnBigWindow">${pokemonStatsSpecialDefense}</div></div>
                                                       <div class="individualStats"> SPEED: <div class="type1ClassOnBigWindow">${pokemonStatsSpecialSpeed}</div></div>
                                                     </div>
+                                              </div>
+                                              <div class="arrowMainContainer">
+                                                <div  class="arrowContainer">
+                                                  <img id="previousButtonID" class="arrows" src="./img/left.svg" alt="">
+                                                </div>
+
+                                                <div  class="arrowContainer">
+                                                  <img id="nextButtonID" class="arrows" src="./img/right.svg" alt="">
+                                                </div>
                                               </div>
                                         </div>`;
 }
@@ -150,3 +163,66 @@ function disableScroll() {
 function enableScroll() {
   document.body.classList.remove("remove-scrolling");
 }
+
+function showLoadingSpinner()
+{
+  document.getElementById('loadingSpinnerContainerID').classList.remove('d-none');
+  document.getElementById('loadingSpinnerID').classList.remove('d-none');
+  document.getElementById('loadingSpinnerContainerID').classList.add('p-fixed');
+  document.getElementById('loadingSpinnerID').classList.add('p-fixed');
+  document.getElementById('blurForAllContainer').classList.add('d-none');
+  document.getElementById('loadingSpinnerID').classList.add('centerLoadingScreen');
+}
+
+function hideLoadingSpinner()
+{
+  document.getElementById('loadingSpinnerContainerID').classList.remove('d-none');  
+  document.getElementById('loadingSpinnerID').classList.add('d-none');
+  document.getElementById('loadingSpinnerContainerID').classList.remove('p-fixed');  
+  document.getElementById('loadingSpinnerID').classList.remove('p-fixed');
+  document.getElementById('blurForAllContainer').classList.remove('d-none');
+  document.getElementById('loadingSpinnerID').classList.remove('centerLoadingScreen');
+}
+
+function previousImage(j)
+    {
+      console.log("funzt");
+    }
+ 
+
+/*function nextPicture(j) {
+  j++;
+
+  if (j == filteredData.length) {
+    j = 0;
+  } 
+  openPicture(j);
+}*/
+
+function goBack() {
+  let element = document.getElementById("klickedPictureContainer");
+  element.classList.add("d-none");
+  let element1 = document.getElementById("photosID");
+  element1.classList.remove("d-none");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+checkType(typesCheckPokemon);

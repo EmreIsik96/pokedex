@@ -1,14 +1,14 @@
 let pokemonData = [];
 let filteredData = [];
-let filteredDataAsNumber = [];
-let currentOffset = 20;
+let currentOffset = 40;
 const limit = 20;
+let currentIndex = 0; // Index des aktuell angezeigten Pokemon
 
 async function loadPokedex() {
   showLoadingSpinner();
-  for (let i = 1; i < 20; i++) {
+  for (let i = 1; i <= currentOffset; i++) {
     let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
-    responseAsJson = await response.json();
+    let responseAsJson = await response.json();
     pokemonData.push(responseAsJson);
   }
   renderPokemonData();
@@ -23,9 +23,8 @@ function renderPokemonData() {
       let pokemonID = pokemonData[j]["id"];
       let pokemonImage = pokemonData[j]["sprites"]["other"]["home"]["front_default"];
       let pokemonName = capitalizeFirstLetter(pokemonData[j]["name"]);
-      let typesCheckPokemon = pokemonData[j]["types"];
       let pokemonType1 = pokemonData[j]["types"][0]["type"]["name"];
-      let pokemonType2 = checkType(typesCheckPokemon);
+      let pokemonType2 = pokemonData[j]["types"].length > 1 ? pokemonData[j]["types"][1]["type"]["name"]: "";
 
       // POKEMON STATS //
       let pokemonStatsHp = pokemonData[j]["stats"][0]["base_stat"];
@@ -35,36 +34,68 @@ function renderPokemonData() {
       let pokemonStatsSpecialDefense = pokemonData[j]["stats"][4]["base_stat"];
       let pokemonStatsSpecialSpeed = pokemonData[j]["stats"][5]["base_stat"];
 
-      content.innerHTML += `<div onclick="showAttributes(
-      '${pokemonType1}',
-      '${pokemonID}',
-      '${pokemonName}',
-      '${pokemonImage}',
-      '${pokemonStatsHp}',
-      '${pokemonStatsAttack}',
-      '${pokemonStatsDefense}',
-      '${pokemonStatsSpecialAttack}',
-      '${pokemonStatsSpecialDefense}',
-      '${pokemonStatsSpecialSpeed}')" class="card ${pokemonType1}">
-                                    <div class=nameOfPokemon>#${pokemonID} ${pokemonName}</div>
-                                    <div> <img class="mainImagesOfPokemon" src="${pokemonImage}"></div>    
-                                    <div class="typeMainContainer">
-                                        <div class="type1Class">${pokemonType1}</div>
-                                        <div>${pokemonType2}</div>
-                                    </div>
-                            </div>`;
+      content.innerHTML += renderPokemonDataTemplate(
+        j,
+        pokemonType1,
+        pokemonType2,
+        pokemonID,
+        pokemonName,
+        pokemonImage,
+        pokemonStatsHp,
+        pokemonStatsAttack,
+        pokemonStatsDefense,
+        pokemonStatsSpecialAttack,
+        pokemonStatsSpecialDefense,
+        pokemonStatsSpecialSpeed
+      );
     }
   } else {
     showFilteredData();
   }
 }
 
-function checkType(typesCheckPokemon) {
-  let pokemonType2 = "";
-  if (typesCheckPokemon.length > 1) {
-    pokemonType2 = `<div class="type2Class">${typesCheckPokemon[1]["type"]["name"]}</div>`;
-  }
-  return pokemonType2;
+function showAttributes(
+  index,
+  pokemonType1,
+  pokemonType2,
+  pokemonID,
+  pokemonName,
+  pokemonImage,
+  pokemonStatsHp,
+  pokemonStatsAttack,
+  pokemonStatsDefense,
+  pokemonStatsSpecialAttack,
+  pokemonStatsSpecialDefense,
+  pokemonStatsSpecialSpeed,
+  isFiltered = false
+) {
+  currentIndex = index; // Speichere den Index des angezeigten Pokémon
+  isFilteredData = isFiltered;
+
+  document.getElementById("attributesMainContainerID").classList.toggle("d-none");
+  document.getElementById("showAttributesID").classList.toggle("d-none");
+  document.getElementById("blurForAllContainer").classList.toggle("blur");
+
+  let showAttributesFromPokemon = document.getElementById("showAttributesID");
+  showAttributesFromPokemon.innerHTML = showAttributesFromPokemonTemplate(
+    pokemonType1,
+    pokemonID,
+    pokemonName,
+    pokemonImage,
+    pokemonType2,
+    pokemonStatsHp,
+    pokemonStatsAttack,
+    pokemonStatsDefense,
+    pokemonStatsSpecialAttack,
+    pokemonStatsSpecialDefense,
+    pokemonStatsSpecialSpeed
+  );
+}
+
+function hideAttributes() {
+  document.getElementById("attributesMainContainerID").classList.toggle("d-none");
+  document.getElementById("showAttributesID").classList.toggle("d-none");
+  document.getElementById("blurForAllContainer").classList.toggle("blur");
 }
 
 function capitalizeFirstLetter(string) {
@@ -74,11 +105,8 @@ function capitalizeFirstLetter(string) {
 function searchName() {
   let input = document.getElementById("inputID").value.toLowerCase();
   if (input.length > 0) {
-    if (isNaN(input)) {
-      // Search by name
-      filteredData = pokemonData.filter((pokemonData) => pokemonData["name"].toLowerCase().startsWith(input));
+    if (isNaN(input)) { filteredData = pokemonData.filter((pokemonData) => pokemonData["name"].toLowerCase().startsWith(input));
     } else {
-      // Search by number
       filteredData = pokemonData.filter((pokemonData) => pokemonData["id"] == input);
     }
     renderPokemonData();
@@ -100,53 +128,6 @@ async function loadMorePokemon() {
   currentOffset += limit;
 }
 
-function showAttributes(
-  pokemonType1,
-  pokemonID,
-  pokemonName,
-  pokemonImage,
-  pokemonStatsHp,
-  pokemonStatsAttack,
-  pokemonStatsDefense,
-  pokemonStatsSpecialAttack,
-  pokemonStatsSpecialDefense,
-  pokemonStatsSpecialSpeed,
-  ) {
-  document.getElementById("attributesMainContainerID").classList.toggle("d-none");
-  document.getElementById("showAttributesID").classList.toggle("d-none");
-  document.getElementById("blurForAllContainer").classList.toggle("blur");
-
-  let showAttributesFromPokemon = document.getElementById("showAttributesID");
-  showAttributesFromPokemon.innerHTML = `<div class="infoBox ${pokemonType1}">
-                                              <div class="nameOfPokemonOnBigWindow">#${pokemonID} ${pokemonName}</div>
-                                              <div class="ImageContainerOnBigWindow"> <img class="mainImagesOfPokemonOnBigWindow" src="${pokemonImage}"></div>
-                                           
-
-                                              <div class="secondContainerOnBigWindow"> 
-                                                  <div class="typeMainContainerOnBigWindow">
-                                                      
-                                                      <div id="statsID" class="statsTypeContainer">TYPE:
-                                                        <div class="type1ClassOnBigWindow">${pokemonType1}</div>
-                                                      </div>
-
-                                                      <div class="statsContainer">
-                                                      <div class="individualStats"> HP: <div class="type1ClassOnBigWindow">${pokemonStatsHp}</div></div>
-                                                      <div class="individualStats"> ATTACK: <div class="type1ClassOnBigWindow">${pokemonStatsAttack}</div></div>
-                                                      <div class="individualStats"> DEFENSE: <div class="type1ClassOnBigWindow">${pokemonStatsDefense}</div></div>
-                                                      <div class="individualStats"> SP-ATTACK: <div class="type1ClassOnBigWindow">${pokemonStatsSpecialAttack}</div></div>
-                                                      <div class="individualStats"> SP-DEFENSE: <div class="type1ClassOnBigWindow">${pokemonStatsSpecialDefense}</div></div>
-                                                      <div class="individualStats"> SPEED: <div class="type1ClassOnBigWindow">${pokemonStatsSpecialSpeed}</div></div>
-                                                    </div>
-                                              </div>
-                                        </div>`;
-}
-
-function hideAttributes() {
-  document.getElementById("attributesMainContainerID").classList.toggle("d-none");
-  document.getElementById("showAttributesID").classList.toggle("d-none");
-  document.getElementById("blurForAllContainer").classList.toggle("blur");
-}
-
 function disableScroll() {
   document.body.classList.add("remove-scrolling");
 }
@@ -155,22 +136,57 @@ function enableScroll() {
   document.body.classList.remove("remove-scrolling");
 }
 
-function showLoadingSpinner()
-{
-  document.getElementById('loadingSpinnerContainerID').classList.remove('d-none');
-  document.getElementById('loadingSpinnerID').classList.remove('d-none');
-  document.getElementById('loadingSpinnerContainerID').classList.add('p-fixed');
-  document.getElementById('loadingSpinnerID').classList.add('p-fixed');
-  document.getElementById('blurForAllContainer').classList.add('d-none');
-  document.getElementById('loadingSpinnerID').classList.add('centerLoadingScreen');
+function showLoadingSpinner() {
+  document.getElementById("loadingSpinnerContainerID").classList.remove("d-none");
+  document.getElementById("loadingSpinnerID").classList.remove("d-none");
+  document.getElementById("loadingSpinnerContainerID").classList.add("p-fixed");
+  document.getElementById("loadingSpinnerID").classList.add("p-fixed");
+  document.getElementById("blurForAllContainer").classList.add("d-none");
+  document.getElementById("loadingSpinnerID").classList.add("centerLoadingScreen");
 }
 
-function hideLoadingSpinner()
-{
-  document.getElementById('loadingSpinnerContainerID').classList.remove('d-none');  
-  document.getElementById('loadingSpinnerID').classList.add('d-none');
-  document.getElementById('loadingSpinnerContainerID').classList.remove('p-fixed');  
-  document.getElementById('loadingSpinnerID').classList.remove('p-fixed');
-  document.getElementById('blurForAllContainer').classList.remove('d-none');
-  document.getElementById('loadingSpinnerID').classList.remove('centerLoadingScreen');
+function hideLoadingSpinner() {
+  document.getElementById("loadingSpinnerContainerID").classList.remove("d-none");
+  document.getElementById("loadingSpinnerID").classList.add("d-none");
+  document.getElementById("loadingSpinnerContainerID").classList.remove("p-fixed");
+  document.getElementById("loadingSpinnerID").classList.remove("p-fixed");
+  document.getElementById("blurForAllContainer").classList.remove("d-none");
+  document.getElementById("loadingSpinnerID").classList.remove("centerLoadingScreen");
+}
+
+function previousImage() {
+  currentIndex--;
+
+  if (currentIndex < 0) {
+    currentIndex = isFilteredData ? filteredData.length - 1: pokemonData.length - 1;
+  }
+  showAttributesFromIndex(currentIndex);
+}
+
+function nextPicture() {
+  currentIndex++;
+
+  if (currentIndex >= (isFilteredData ? filteredData.length : pokemonData.length)) {
+    currentIndex = 0;
+  }
+  showAttributesFromIndex(currentIndex);
+}
+
+function showAttributesFromIndex(index) {
+  let pokemon = isFilteredData ? filteredData[index] : pokemonData[index];
+  showAttributes(
+    index,
+    pokemon["types"][0]["type"]["name"],
+    pokemon["types"].length > 1 ? pokemon["types"][1]["type"]["name"] : "",
+    pokemon["id"],
+    capitalizeFirstLetter(pokemon["name"]),
+    pokemon["sprites"]["other"]["home"]["front_default"],
+    pokemon["stats"][0]["base_stat"],
+    pokemon["stats"][1]["base_stat"],
+    pokemon["stats"][2]["base_stat"],
+    pokemon["stats"][3]["base_stat"],
+    pokemon["stats"][4]["base_stat"],
+    pokemon["stats"][5]["base_stat"],
+    isFilteredData
+  );
 }

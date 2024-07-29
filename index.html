@@ -3,40 +3,46 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="./img/navicon.svg">
     <link rel="stylesheet" href="style.css">
+    <script src="renderPokeDataTemplate.js"></script>
+    <script src="attributesFromPokemonTemplate.js"></script>
     <script src="script.js"></script>
     <script src="showFilteredDataTemp.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokedex</title>
 </head>
 
-<body onload="loadPokedex()">   
-    
+<body onload="loadPokedex()">
     <div id="loadingSpinnerContainerID" class="loading-screen d-none">
-        <div id="loadingSpinnerID" class="loadingScreen d-none"><img class="loadingPikachuIMG" src="./gif/loading-pika.gif"><img class="loadingIMG" src="./gif/loading.gif"></div>
+        <div id="loadingSpinnerID" class="loadingScreen d-none">
+            <img class="loadingPikachuIMG" src="./gif/loading-pika.gif">
+            <img class="loadingIMG" src="./gif/loading.gif">
+        </div>
     </div>
 
     <header class="headerClass">
         <div class="home" onclick="window.location.reload();">
-        P<img class="pokeIcon" src="./img/poke-icon.svg" alt="">kédex
+            P<img class="pokeIcon" src="./img/poke-icon.svg" alt="">kédex
         </div>
     </header>
 
     <div class="" id="blurForAllContainer">
         <div id="inputMainContainerID" class="inputMainContainer">
             <img class="pikaSearchIMG" src="./img/pikaSearch.png" alt="">
-            <input id="inputID" oninput="searchName()" type="search" placeholder="Nach Pokémon Namen oder Nummer suchen...">
+            <input id="inputID" oninput="searchName()" type="search"
+                placeholder="Nach Pokémon Namen oder Nummer suchen...">
         </div>
-        <div onclick="disableScroll()" class="mainContainer" id="content"></div>
+        <div class="mainContainer" id="content"></div>
         <div id="image-container"></div>
         <div class="buttonMainContainer">
             <button onclick="loadMorePokemon()" class="lmButton">Load More</button>
         </div>
     </div>
 
-    <div onclick="hideAttributes(); enableScroll()" id="attributesMainContainerID"
-        class="attributesMainContainer d-none">
+    <div onclick="hideAttributes(); enableScroll()" id="attributesMainContainerID" class="attributesMainContainer d-none">
         <div id="showAttributesID" class='attributesContainer d-none'></div>
     </div>
 </body>
+
 </html>
