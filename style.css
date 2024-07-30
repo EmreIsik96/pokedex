@@ -1,4 +1,6 @@
 body {
+  font-family: cursive;
+  max-width: 1920px;
   margin: 0;
   background-image: url(./img/bg_image.jpg);
   background-position: center;
